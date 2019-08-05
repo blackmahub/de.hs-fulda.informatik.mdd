@@ -1,0 +1,27 @@
+modeltype Source "strict" uses SourceModel('http://www.hs-fulda.de/mdd/sourceModel');
+
+transformation exercise5(inout source : Source);
+
+main() {
+	source.objectsOfType(Container)->map toContainer();
+}
+
+mapping inout Source :: Container :: toContainer() {
+//	log(self.persons->select(p | p.oclIsKindOf(BachelorStudent) and p.age >= 20) + " hello mahbub");
+	
+//	persons := self.persons - (self.persons->select(p | p.oclIsKindOf(BachelorStudent) and p.age >= 20));
+//	persons := persons->union(self.persons->selectByKind(BachelorStudent).map toMasterStudent());
+	persons := self.persons->union(self.persons->selectByKind(BachelorStudent).map toMasterStudent());
+	persons := persons - (persons->select(p | p.oclIsKindOf(BachelorStudent) and p.age >= 20));	
+}
+
+mapping Source :: BachelorStudent :: toMasterStudent() : Source :: MasterStudent 
+	when {
+		self.age >= 20
+	}
+{
+	log("BachelorStudent " + self.age.toString() + " is mapped");
+	age := self.age;
+	likes := self.likes;
+	teacher := self.teacher;
+}

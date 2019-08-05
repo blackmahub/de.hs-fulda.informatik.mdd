@@ -1,0 +1,23 @@
+modeltype Source "strict" uses SourceModel('http://www.hs-fulda.de/mdd/sourceModel');
+modeltype Target "strict" uses TargetModel('http://www.hs-fulda.de/mdd/targetModel');
+	
+transformation Exer3_Transformation(in source:Source, out target:Target);
+
+main() {
+	source.objectsOfType(Container)->map toContainer();
+}
+
+mapping Source::Container::toContainer() : Target::Container {
+	persons := self.persons->selectByType(Professor).map toProfessor()->union(self.persons->selectByType(BachelorStudent).map toStudent());
+}
+
+mapping Source::Professor::toProfessor() : Target::Professor {
+	age := self.age;
+	learner := self.learner->selectByKind(BachelorStudent).map toStudent();
+}
+
+mapping Source::BachelorStudent::toStudent() : Target::Studentin {
+	age := self.age;
+	aspiredDegree := StudentKind::Bachelor
+}
+

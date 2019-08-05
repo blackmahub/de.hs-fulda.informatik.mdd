@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:Statemachine
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sm="http://hsfulda.master.mdd.emf.statemachine"
+    xsi:schemaLocation="http://hsfulda.master.mdd.emf.statemachine statemachine.ecore"
+    name="1">
+  <states outgoings="//@transitions.0 //@transitions.1"
+      name="A"/>
+  <states name="B"/>
+  <states xsi:type="sm:ComplexState"
+      name="1">
+    <region
+        xsi:type="sm:Statemachine"
+        name="2">
+      <states
+          outgoings="//@states.2/@region/@transitions.0"
+          name="C"
+          super="//@states.2"/>
+      <states
+          name="D"
+          super="//@states.2"/>
+      <transitions
+          xsi:type="sm:LabeledTransition"
+          id="3"
+          source="//@states.2/@region/@states.0"
+          target="//@states.2/@region/@states.1"
+          action="//@states.2/@region/@actions.0"/>
+      <actions
+          name="2"/>
+    </region>
+  </states>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="1"
+      source="//@states.0"
+      target="//@states.1"
+      action="//@actions.0"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="2"
+      source="//@states.0"
+      target="//@states.1"
+      action="//@actions.0"/>
+  <actions name="1"/>
+</sm:Statemachine>

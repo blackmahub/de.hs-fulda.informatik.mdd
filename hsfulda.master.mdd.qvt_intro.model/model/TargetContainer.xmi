@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<targetModel:Container xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:targetModel="http://www.hs-fulda.de/mdd/targetModel" xsi:schemaLocation="http://www.hs-fulda.de/mdd/targetModel targetModel.ecore">
+  <persons xsi:type="targetModel:Studentin" age="20" teacher="//@persons.3 //@persons.4 //@persons.7"/>
+  <persons xsi:type="targetModel:Studentin" age="21" teacher="//@persons.8 //@persons.3 //@persons.6 //@persons.4 //@persons.7"/>
+  <persons xsi:type="targetModel:Studentin" age="19" teacher="//@persons.3 //@persons.4 //@persons.7"/>
+  <persons xsi:type="targetModel:Professor" age="51" learner="//@persons.0 //@persons.1 //@persons.2 //@persons.5 //@persons.9"/>
+  <persons xsi:type="targetModel:Professor" age="50" learner="//@persons.0 //@persons.1 //@persons.2 //@persons.5 //@persons.9"/>
+  <persons xsi:type="targetModel:Studentin" age="20" teacher="//@persons.8 //@persons.3 //@persons.6 //@persons.4 //@persons.7"/>
+  <persons xsi:type="targetModel:Professor" age="45" learner="//@persons.1 //@persons.5 //@persons.9"/>
+  <persons xsi:type="targetModel:Professor" age="43" learner="//@persons.0 //@persons.1 //@persons.2 //@persons.5 //@persons.9"/>
+  <persons xsi:type="targetModel:Professor" age="50" learner="//@persons.1 //@persons.5 //@persons.9"/>
+  <persons xsi:type="targetModel:Studentin" age="18" teacher="//@persons.8 //@persons.3 //@persons.6 //@persons.4 //@persons.7"/>
+</targetModel:Container>

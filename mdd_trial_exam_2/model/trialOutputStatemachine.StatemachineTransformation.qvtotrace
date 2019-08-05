@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="toNewSM" package="StatemachineTransformation" module="StatemachineTransformation"/>
+    <context>
+      <context name="self" type="Statemachine">
+        <value>
+          <modelElement href="trialInputStatemachine.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Statemachine">
+        <value>
+          <modelElement href="trialOutputStatemachine.xmi#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toNewState" package="StatemachineTransformation" module="StatemachineTransformation"/>
+    <context>
+      <context name="self" type="State">
+        <value>
+          <modelElement href="trialInputStatemachine.xmi#//@states.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="State">
+        <value>
+          <modelElement href="trialOutputStatemachine.xmi#//@states.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toNewLabeledTransition" package="StatemachineTransformation" module="StatemachineTransformation"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value>
+          <modelElement href="trialInputStatemachine.xmi#//@transitions.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="trialOutputStatemachine.xmi#//@states.0/@outgoings.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toNewState" package="StatemachineTransformation" module="StatemachineTransformation"/>
+    <context>
+      <context name="self" type="State">
+        <value>
+          <modelElement href="trialInputStatemachine.xmi#//@states.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="State">
+        <value>
+          <modelElement href="trialOutputStatemachine.xmi#//@states.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toNewLabeledTransition" package="StatemachineTransformation" module="StatemachineTransformation"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value>
+          <modelElement href="trialInputStatemachine.xmi#//@transitions.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="trialOutputStatemachine.xmi#//@states.1/@outgoings.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toNewAction" package="StatemachineTransformation" module="StatemachineTransformation"/>
+    <context>
+      <context name="self" type="Action">
+        <value>
+          <modelElement href="trialInputStatemachine.xmi#//@actions.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Action">
+        <value>
+          <modelElement href="trialOutputStatemachine.xmi#//@actions.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

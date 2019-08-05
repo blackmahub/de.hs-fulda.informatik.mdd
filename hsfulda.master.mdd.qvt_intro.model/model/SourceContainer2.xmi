@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sourceModel:Container xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sourceModel="http://www.hs-fulda.de/mdd/sourceModel" xsi:schemaLocation="http://www.hs-fulda.de/mdd/sourceModel sourceModel.ecore">
+  <persons xsi:type="sourceModel:Professor" age="51" likes="//@persons.1" learner="//@persons.2 //@persons.9 //@persons.3 //@persons.5 //@persons.6 //@persons.7 //@persons.12 //@persons.4"/>
+  <persons xsi:type="sourceModel:Professor" age="45" likes="//@persons.2" learner="//@persons.2 //@persons.9 //@persons.3 //@persons.6 //@persons.7 //@persons.12"/>
+  <persons xsi:type="sourceModel:MasterStudent" age="25" likes="//@persons.1" teacher="//@persons.1 //@persons.8 //@persons.0"/>
+  <persons xsi:type="sourceModel:BachelorStudent" age="18" likes="//@persons.5" teacher="//@persons.8 //@persons.1 //@persons.0 //@persons.11 //@persons.10"/>
+  <persons xsi:type="sourceModel:MasterStudent" age="20" likes="//@persons.11" teacher="//@persons.0 //@persons.10 //@persons.11"/>
+  <persons xsi:type="sourceModel:BachelorStudent" age="19" likes="//@persons.0" teacher="//@persons.0 //@persons.11 //@persons.10"/>
+  <persons xsi:type="sourceModel:MasterStudent" age="27" likes="//@persons.1" teacher="//@persons.1 //@persons.8 //@persons.0"/>
+  <persons xsi:type="sourceModel:MasterStudent" age="20" likes="//@persons.2" teacher="//@persons.0 //@persons.1 //@persons.8 //@persons.10 //@persons.11"/>
+  <persons xsi:type="sourceModel:Professor" age="50" likes="//@persons.2" learner="//@persons.2 //@persons.9 //@persons.3 //@persons.6 //@persons.7 //@persons.12"/>
+  <persons xsi:type="sourceModel:MasterStudent" age="30" likes="//@persons.3" teacher="//@persons.8 //@persons.1 //@persons.0"/>
+  <persons xsi:type="sourceModel:Professor" age="50" likes="//@persons.0" learner="//@persons.3 //@persons.5 //@persons.7 //@persons.12 //@persons.4"/>
+  <persons xsi:type="sourceModel:Professor" age="43" likes="//@persons.2" learner="//@persons.3 //@persons.5 //@persons.7 //@persons.12 //@persons.4"/>
+  <persons xsi:type="sourceModel:MasterStudent" age="21" likes="//@persons.8" teacher="//@persons.0 //@persons.8 //@persons.1 //@persons.10 //@persons.11"/>
+</sourceModel:Container>

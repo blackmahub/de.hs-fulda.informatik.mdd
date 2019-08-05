@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sm="http://hsfulda.master.mdd.emf.statemachine" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="replaceComplexStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context kind="INOUT" name="self" type="Statemachine">
+        <value>
+          <modelElement href="InputStatemachine.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result/>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="createRegion" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="ComplexState">
+        <value modelElement="//@traceRecords.1/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:ComplexState" outgoings="//@traceRecords.14/@context/@context/@value/@intermediateElement //@traceRecords.13/@context/@context/@value/@intermediateElement" name="B"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Region">
+        <value modelElement="//@traceRecords.1/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:Region"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="multiply" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="State">
+        <value/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="lowerState" type="State">
+        <value/>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="State">
+        <value modelElement="//@traceRecords.2/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:State" outgoings="//@traceRecords.3/@result/@result.0/@value/@intermediateElement //@traceRecords.19/@result/@result.0/@value/@intermediateElement //@traceRecords.20/@result/@result.0/@value/@intermediateElement //@traceRecords.21/@result/@result.0/@value/@intermediateElement" name="B1,B4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenDifferentSimpleStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.3/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="12">
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="100" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.3/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="112">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.3"/>
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="multiply" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="State">
+        <value/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="lowerState" type="State">
+        <value/>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="State">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@states.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenSameSimpleStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.5/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="15">
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="200" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.5/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="215">
+            <source xsi:type="sm:State" href="InputStatemachine.xmi#//@states.3"/>
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.3"/>
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionFromSimpleToComplex" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.6/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="13">
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="300" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="multiply" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="State">
+        <value/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="lowerState" type="State">
+        <value/>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="State">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@states.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenDifferentSimpleStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.8/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="14">
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="100" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.8"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenDifferentSimpleStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.3/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="100" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.9/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="112">
+            <source xsi:type="sm:State" href="InputStatemachine.xmi#//@states.2"/>
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="multiply" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="State">
+        <value/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="lowerState" type="State">
+        <value/>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="State">
+        <value modelElement="//@traceRecords.10/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:State" outgoings="//@traceRecords.11/@result/@result.0/@value/@intermediateElement //@traceRecords.12/@result/@result.0/@value/@intermediateElement //@traceRecords.13/@result/@result.0/@value/@intermediateElement //@traceRecords.14/@result/@result.0/@value/@intermediateElement" name="B2,B3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenDifferentSimpleStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.8/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="100" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.11/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="114">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.3"/>
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionFromSimpleToComplex" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.6/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="300" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.12/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="313">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.2"/>
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenSameComplexStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.13/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="11">
+            <action href="InputStatemachine.xmi#//@actions.1"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.13/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="411">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.2"/>
+            <action href="InputStatemachine.xmi#//@actions.1"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionFromComplexToSimple" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.14/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="10">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.0"/>
+            <action href="InputStatemachine.xmi#//@actions.0"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.14/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="410">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.0"/>
+            <action href="InputStatemachine.xmi#//@actions.0"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenSameComplexStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.13/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.10"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionFromComplexToSimple" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.14/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.11"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenSameComplexStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.13/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.6"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionFromComplexToSimple" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.14/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenSameSimpleStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.5/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="200" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.19/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="215">
+            <action href="InputStatemachine.xmi#//@actions.2"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionBetweenSameComplexStates" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.13/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.20/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="411">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.2"/>
+            <action href="InputStatemachine.xmi#//@actions.1"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionFromComplexToSimple" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.14/@context/@context/@value/@intermediateElement"/>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="400" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection/>
+          <collection/>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value modelElement="//@traceRecords.21/@result/@result.0/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="410">
+            <target xsi:type="sm:State" href="InputStatemachine.xmi#//@states.0"/>
+            <action href="InputStatemachine.xmi#//@actions.0"/>
+          </intermediateElement>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mergeTransitionsOfSameAction" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context kind="INOUT" name="self" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="target1" type="State">
+        <value/>
+      </parameters>
+      <parameters name="target2" type="State">
+        <value/>
+      </parameters>
+    </parameters>
+    <result/>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="mapTransitionFromSimpleToComplex" package="FlattenComplexStates" module="FlattenComplexStates"/>
+    <context>
+      <context name="self" type="LabeledTransition">
+        <value modelElement="//@traceRecords.23/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sm:LabeledTransition" id="6">
+            <source xsi:type="sm:State" href="InputStatemachine.xmi#//@states.1"/>
+            <action href="InputStatemachine.xmi#//@actions.0"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters>
+      <parameters name="transitionId" type="Integer">
+        <value primitiveValue="300" collectionType="Integer"/>
+      </parameters>
+      <parameters name="sources" type="Set(State)">
+        <value collectionType="Set">
+          <collection>
+            <modelElement href="InputStatemachine.xmi#//@states.1"/>
+          </collection>
+        </value>
+      </parameters>
+    </parameters>
+    <result>
+      <result kind="OUT" name="result" type="LabeledTransition">
+        <value>
+          <modelElement href="InputStatemachine.xmi#//@transitions.12"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

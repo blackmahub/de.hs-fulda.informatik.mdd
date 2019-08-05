@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:Statemachine
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sm="http://hsfulda.master.mdd.emf.statemachine"
+    xsi:schemaLocation="http://hsfulda.master.mdd.emf.statemachine statemachine.ecore"
+    name="InconsistentStatemachine">
+  <states xsi:type="sm:ComplexState"
+      outgoings="//@transitions.0"
+      name="One">
+    <region
+        xsi:type="sm:Statemachine"
+        name="One">
+      <states
+          outgoings="//@states.0/@region/@transitions.1"
+          name="SubOneA"
+          super="//@states.0"/>
+      <states
+          outgoings="//@states.0/@region/@transitions.2 //@states.1/@region/@transitions.2"
+          name="SubOneB"
+          super="//@states.0"/>
+      <initial
+          outgoings="//@states.1/@region/@transitions.0"
+          id="1"/>
+      <transitions
+          id="1"
+          source="//@states.1/@region/@initial"
+          target="//@states.1/@region/@states.0"/>
+      <transitions
+          xsi:type="sm:LabeledTransition"
+          id="3"
+          source="//@states.0/@region/@states.0"
+          target="//@states.0/@region/@states.1"
+          action="//@states.0/@region/@actions.0"/>
+      <transitions
+          xsi:type="sm:LabeledTransition"
+          id="4"
+          source="//@states.0/@region/@states.1"
+          target="//@states.1/@region/@states.1"
+          action="//@states.1/@region/@actions.0"/>
+      <actions
+          name="doOne"/>
+    </region>
+  </states>
+  <states xsi:type="sm:ComplexState"
+      outgoings="//@transitions.1"
+      name="Two">
+    <region
+        xsi:type="sm:Statemachine"
+        name="Two">
+      <states
+          name="SubTwoA"
+          super="//@states.1"/>
+      <states
+          outgoings="//@states.1/@region/@transitions.1"
+          name="SubTwoB"
+          super="//@states.1"/>
+      <initial
+          outgoings="//@states.0/@region/@transitions.0"
+          id="2"/>
+      <transitions
+          id="2"
+          source="//@states.0/@region/@initial"
+          target="//@states.0/@region/@states.0"/>
+      <transitions
+          xsi:type="sm:LabeledTransition"
+          id="5"
+          source="//@states.1/@region/@states.1"
+          target="//@states.1/@region/@states.0"
+          action="//@states.0/@region/@actions.0"/>
+      <transitions
+          xsi:type="sm:LabeledTransition"
+          id="6"
+          source="//@states.0/@region/@states.1"
+          target="//@states.1/@region/@states.0"
+          action="//@states.1/@region/@actions.0"/>
+      <actions
+          name="doTwo"/>
+    </region>
+  </states>
+  <initial outgoings="//@transitions.2"
+      id="0"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="1"
+      source="//@states.0"
+      target="//@states.1"
+      action="//@actions.0"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="2"
+      source="//@states.1"
+      target="//@states.1"
+      action="//@actions.0"/>
+  <transitions
+      id="0"
+      source="//@initial"
+      target="//@states.0"/>
+  <actions name="do"/>
+</sm:Statemachine>

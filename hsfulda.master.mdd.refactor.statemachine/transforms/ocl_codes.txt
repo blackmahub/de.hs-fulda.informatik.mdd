@@ -1,0 +1,17 @@
+(self.region.states.oclAsType(Vertex)->union(self.region.initial.oclAsType(Vertex))).outgoings->select(t | t.source)
+
+(self.region.states.oclAsType(Vertex)->union(self.region.initial.oclAsType(Vertex))).outgoings->select(t | t.oclIsTypeOf(LabeledTransition) implies t.source.oclAsType(State).super = self and t.target.oclAsType(State).super = self)
+
+self.states->select(s | s.oclIsKindOf(ComplexState)).oclAsType(ComplexState)->forAll(cs | cs.region->size() = 2)
+
+body: (self.region.states.oclAsType(Vertex)->union(self.region.initial.oclAsType(Vertex))).outgoings->select(t | t.oclIsTypeOf(LabeledTransition) implies t.source.oclAsType(State).super = self and t.target.oclAsType(State).super = self)->asSet();
+
+'B3,B1'.tokenize(',')->includesAll(Set{'B1','B3'})
+
+
+
+
+
+
+
+

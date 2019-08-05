@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SM:Statemachine
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:SM="http://hs-fulda.de/ai/mdd/statemachine"
+    xsi:schemaLocation="http://hs-fulda.de/ai/mdd/statemachine exercise_3.ecore"
+    name="Fan">
+  <states outgoings="//@transitions.1"
+      name="Off"/>
+  <states xsi:type="SM:ComplexSate"
+      outgoings="//@transitions.2"
+      name="On">
+    <region
+        name="speed">
+      <states
+          xsi:type="SM:ComplexSate"
+          outgoings="//@transitions.4"
+          name="Low">
+        <region
+            name="mode">
+          <states
+              outgoings="//@transitions.8"
+              name="Silent"/>
+          <states
+              outgoings="//@transitions.9"
+              name="Loud"/>
+          <initial
+              outgoings="//@transitions.7"
+              psId="3"/>
+        </region>
+      </states>
+      <states
+          outgoings="//@transitions.5"
+          name="Medium"/>
+      <states
+          outgoings="//@transitions.6"
+          name="High"/>
+      <initial
+          outgoings="//@transitions.3"
+          psId="2"/>
+    </region>
+  </states>
+  <initial outgoings="//@transitions.0"
+      psId="1"/>
+  <transitions
+      tId="1"
+      source="//@initial"
+      target="//@states.0"/>
+  <transitions
+      xsi:type="SM:LabeledTransition"
+      tId="2"
+      source="//@states.0"
+      target="//@states.1"
+      action="//@actions.0"/>
+  <transitions
+      xsi:type="SM:LabeledTransition"
+      tId="3"
+      source="//@states.1"
+      target="//@states.0"
+      action="//@actions.0"/>
+  <transitions
+      tId="4"
+      source="//@states.1/@region.0/@initial"
+      target="//@states.1/@region.0/@states.0"/>
+  <transitions
+      xsi:type="SM:LabeledTransition"
+      tId="5"
+      source="//@states.1/@region.0/@states.0"
+      target="//@states.1/@region.0/@states.1"
+      action="//@actions.1"/>
+  <transitions
+      xsi:type="SM:LabeledTransition"
+      tId="6"
+      source="//@states.1/@region.0/@states.1"
+      target="//@states.1/@region.0/@states.2"
+      action="//@actions.1"/>
+  <transitions
+      xsi:type="SM:LabeledTransition"
+      tId="7"
+      source="//@states.1/@region.0/@states.2"
+      target="//@states.1/@region.0/@states.0"
+      action="//@actions.1"/>
+  <transitions
+      tId="8"
+      source="//@states.1/@region.0/@states.0/@region.0/@initial"
+      target="//@states.1/@region.0/@states.0/@region.0/@states.0"/>
+  <transitions
+      xsi:type="SM:LabeledTransition"
+      tId="9"
+      source="//@states.1/@region.0/@states.0/@region.0/@states.0"
+      target="//@states.1/@region.0/@states.0/@region.0/@states.1"
+      action="//@actions.2"/>
+  <transitions
+      xsi:type="SM:LabeledTransition"
+      tId="10"
+      source="//@states.1/@region.0/@states.0/@region.0/@states.1"
+      target="//@states.1/@region.0/@states.0/@region.0/@states.0"
+      action="//@actions.2"/>
+  <actions name="press_switch"/>
+  <actions name="pull_chain"/>
+  <actions name="change_mode"/>
+</SM:Statemachine>

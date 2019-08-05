@@ -1,0 +1,425 @@
+modeltype statemachine uses 'http://hsfulda.master.mdd.emf.statemachine';
+
+transformation FlattenComplexStates(inout sm:statemachine);
+
+// do not touch
+main() {
+	sm.objectsOfType(Statemachine).map replaceComplexStates();
+
+	// delete intermediate region
+	while (sm.objectsOfType(Region)->notEmpty()){
+		sm.removeElement(sm.objectsOfType(Region)->any(true));
+	};
+	
+	// remove complex state
+	while (sm.objectsOfType(ComplexState)->notEmpty()) {
+		sm.removeElement(sm.objectsOfType(ComplexState)->any(true));
+	};
+	
+	// remove invalid transitions
+	var invalidTransitions : Set(Transition) := sm.objectsOfType(Transition)->select(t | t.source->isEmpty() and t.target->isEmpty());
+	while (invalidTransitions->notEmpty()){
+		var it : Transition := invalidTransitions->any(true); 
+		sm.removeElement(it);
+		invalidTransitions := invalidTransitions->excluding(it);
+	};
+	
+	// remove invalid labeled transitions
+	var invalidLabeledTransitions : Set(LabeledTransition) := sm.objectsOfType(LabeledTransition)->select(t | t.source->isEmpty() or t.target->isEmpty());
+	while (invalidLabeledTransitions->notEmpty()){
+		var ilt : LabeledTransition := invalidLabeledTransitions->any(true); 
+		sm.removeElement(ilt);
+		invalidLabeledTransitions := invalidLabeledTransitions->excluding(ilt);
+	};
+}
+
+// add a pre-condition to the mapping
+// fill in the body of the mapping adding new transitions 
+// while deleting states and transitions not used any more
+// some transitions might need to be re-directed (depending on the mappings you defined below)
+mapping inout Statemachine::replaceComplexStates() 
+	when {
+		self.states->select(s | s.oclIsKindOf(ComplexState)).oclAsType(ComplexState)->forAll(cs | cs.region->size() = 2 and not cs.directSubStates()->exists(subState | subState.oclIsKindOf(ComplexState)));
+	}
+{
+
+	// add new states by computing cross product of states of the two regions 
+	// including the creation of their outgoing new transitions
+	// states += ??? createRegion().states;
+	
+	var tempRegion : Region := self.states->selectByKind(ComplexState)->map createRegion()->any(true);
+	states += tempRegion.states;
+	transitions += tempRegion.states.outgoings;
+	
+	var machineInitialState : State := self.realInitialState();
+	var newLabeledTransition : LabeledTransition := machineInitialState.outgoings->any(t | t.target.oclIsTypeOf(ComplexState)).oclAsType(LabeledTransition)->map mapTransitionFromSimpleToComplex(300, Set{machineInitialState})->any(true);
+	machineInitialState.outgoings += newLabeledTransition;
+	transitions += newLabeledTransition;
+}
+
+// storing the new states in a region - do not touch
+mapping ComplexState::createRegion()  : Region {
+	
+	// assignments to variables should be syntactically correct after changing the ecore file 
+	var oldLowerRegionStates : Set(State) := self.region->at(2).states;
+	var oldUpperRegionStates : Set(State) := self.region->at(1).states;
+	
+	// call-by-value ensures that the original ComplexState is not touched
+	// the states will be removed from one of the sets step by step	
+	
+	var statemachineStates : Set(State);
+	
+	while (oldLowerRegionStates->notEmpty()){
+		var ls : State;
+		ls := oldLowerRegionStates->any(true);
+		
+		var index : Integer := 1;
+		while (index <= oldUpperRegionStates->size()) {
+			var us : State;
+			us := oldUpperRegionStates->asOrderedSet()->at(index);
+			index := index + 1;
+			
+			statemachineStates := sm.objectsOfType(State);
+			if (statemachineStates->notEmpty()) {
+				if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{us.name, ls.name}))) {
+					log('new flatten state is already exists.');
+					states += statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{us.name, ls.name}));
+				} else {
+					log('creating new flatten state.');
+					states += us->map multiply(ls)->any(true);
+				};
+			};
+		};
+			
+		oldLowerRegionStates := oldLowerRegionStates->excluding(ls);	
+	};	
+
+	// merge newly mapped transitions into one transition which have same source and action
+	statemachineStates := sm.objectsOfType(State);
+	var realInitialStates : OrderedSet(State) := self.realInitialStates()->asOrderedSet();
+	log('New Flatten States Size: '.concat(states->size().toString()));
+	var newInitialFlattenState : State := states->any(s | s.name.tokenize(',').trim()->includesAll(Set{realInitialStates->at(1).name, realInitialStates->at(2).name}));
+	log('New Initial Flatten State: '.concat(newInitialFlattenState.name));
+	var newLabeledOutgoings : Bag(LabeledTransition) := newInitialFlattenState.outgoings.oclAsType(LabeledTransition);
+	var strLOs : String := newLabeledOutgoings->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+	log('newLabeledOutgoings');
+	log(strLOs);
+	
+	if (newLabeledOutgoings->notEmpty()) {
+		var statemachineActions : OrderedSet(Action) = states.outgoings.oclAsType(LabeledTransition).action->asOrderedSet();
+		var index : Integer := 1;
+		while (index <= statemachineActions->size()) {
+			var a : Action := statemachineActions->at(index);
+			index := index + 1;
+			log('Action: '.concat(a.name).concat(newLabeledOutgoings.action->count(a).toString()));
+			if (newLabeledOutgoings.action->count(a) > 1) {
+				log('hello mahbub');
+				strLOs := newLabeledOutgoings->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+				log('newLabeledOutgoings');
+				log(strLOs);
+				var newLabeledOutgoingsOfSameAction : Bag(LabeledTransition) := newLabeledOutgoings->select(lt | lt.action = a);
+				strLOs := newLabeledOutgoingsOfSameAction->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+				log('newLabeledOutgoingsOfSameAction');
+				log(strLOs);
+				var newSourceNames : OrderedSet(String) := newInitialFlattenState.name.tokenize(',').trim()->asOrderedSet(); 
+				log('New Source Names: '.concat(newSourceNames->at(1)).concat(',').concat(newSourceNames->at(2)));
+				var newLabeledTargetOutgoings : Bag(LabeledTransition) := newLabeledOutgoingsOfSameAction.target.outgoings.oclAsType(LabeledTransition);
+				var newTargetsOfSameAction : OrderedSet(State) := newLabeledOutgoingsOfSameAction.target.oclAsType(State)->asOrderedSet();
+				var targetNamesOfSameAction : String := newTargetsOfSameAction.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+				log('newTargetsOfSameAction');
+				log(targetNamesOfSameAction);
+				var newTargetNames : OrderedSet(String) := newTargetsOfSameAction.name.tokenize(',').trim()->excluding(newSourceNames->at(1))->excluding(newSourceNames->at(2))->asOrderedSet();
+				log('New Target Names: '.concat(newTargetNames->at(1)).concat(',').concat(newTargetNames->at(2)));
+				targetNamesOfSameAction := newTargetsOfSameAction.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+				log('newTargetsOfSameAction');
+				log(targetNamesOfSameAction);
+				var newLabeledOutgoingOfSameAction : LabeledTransition := newLabeledOutgoingsOfSameAction->any(true);
+				statemachineStates := sm.objectsOfType(State);
+				if (statemachineStates->notEmpty()) {
+					var newLabeledTarget1 : State := statemachineStates->any(s | s.name = newTargetNames->at(1));
+					var newLabeledTarget2 : State := statemachineStates->any(s | s.name = newTargetNames->at(2));
+					log('newLabeledTarget1: '.concat(newLabeledTarget1.name));
+					log('newLabeledTarget2: '.concat(newLabeledTarget2.name));
+					newLabeledOutgoingOfSameAction->map mergeTransitionsOfSameAction(newLabeledTarget1, newLabeledTarget2)->any(true); 
+				};
+				targetNamesOfSameAction := newTargetsOfSameAction.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+				log('newTargetsOfSameAction');
+				log(targetNamesOfSameAction);
+				log('removing newly created state: '.concat(newTargetsOfSameAction->at(1).name));
+				sm.removeElement(sm.objectsOfType(State)->any(s | s = newTargetsOfSameAction->at(1)));
+				targetNamesOfSameAction := newTargetsOfSameAction.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+				log('newTargetsOfSameAction');
+				log(targetNamesOfSameAction);
+				log('removing newly created state: '.concat(newTargetsOfSameAction->at(2).name));
+				sm.removeElement(sm.objectsOfType(State)->any(s | s = newTargetsOfSameAction->at(2)));
+				while (newLabeledTargetOutgoings->notEmpty()) {
+					var newLabeledTargetOutgoing : LabeledTransition := newLabeledTargetOutgoings->any(true);
+					log('removing newly mapped transition: '.concat(newLabeledTargetOutgoing.id.toString()));
+					sm.removeElement(sm.objectsOfType(LabeledTransition)->any(lt | lt = newLabeledTargetOutgoing));	
+					newLabeledTargetOutgoings := newLabeledTargetOutgoings->excluding(newLabeledTargetOutgoing);
+				}; 
+				newLabeledOutgoingsOfSameAction := newLabeledOutgoingsOfSameAction->excluding(newLabeledOutgoingOfSameAction);
+				newLabeledOutgoings := newLabeledOutgoings->excluding(newLabeledOutgoingsOfSameAction->any(true)); 
+				log('removing newly mapped transition: '.concat(newLabeledOutgoingsOfSameAction->any(true).id.toString()));
+				sm.removeElement(sm.objectsOfType(LabeledTransition)->any(lt | lt = newLabeledOutgoingsOfSameAction->any(true)));
+			};
+		};
+	};
+	
+	var newFlattenState : State := states->any(s | s.name.tokenize(',').trim()->excludesAll(Set{realInitialStates->at(1).name, realInitialStates->at(2).name}));
+	var newSameSourceTargetTransition : LabeledTransition := newFlattenState.outgoings->any(lt | lt.source = lt.target).oclAsType(LabeledTransition);
+	log('removing newly mapped transition: '.concat(newSameSourceTargetTransition.id.toString()));
+	sm.removeElement(sm.objectsOfType(LabeledTransition)->any(lt | lt = newSameSourceTargetTransition));
+	
+	var newFlattenLabeledTransitions : OrderedSet(LabeledTransition) := states.outgoings.oclAsType(LabeledTransition)->asOrderedSet(); 
+	var index : Integer := 1;
+	while (index <= newFlattenLabeledTransitions->size()) {
+		sm.objectsOfType(Statemachine)->any(true).transitions := sm.objectsOfType(Statemachine)->any(true).transitions->including(sm.objectsOfType(LabeledTransition)->any(lt | lt = newFlattenLabeledTransitions->at(index)));
+		index := index + 1;	
+	};
+} 
+
+// fill in the body of this mapping according to the comments below
+mapping State::multiply(lowerState : State) : State {
+
+	// add values to the following variables:
+	var labeledOutgoings : Set(LabeledTransition); 
+	var labeledSuperOutgoings : Set(LabeledTransition);
+	
+	var labeledOutgoingsWithInnerTarget : Set(LabeledTransition); 
+	var labeledOutgoingsWithComplexTarget : Set(LabeledTransition);
+	
+	// define a new name for the state consisting of the names of both old states
+	name := self.name + ',' + lowerState.name;
+
+	var innerTransitions : Set(LabeledTransition) := self.super.innerTransitions()->select(t | t.source.oclAsType(State) = self or t.source.oclAsType(State) = lowerState).oclAsType(LabeledTransition)->asSet();
+	
+	labeledOutgoings := innerTransitions->select(t | t.source.oclAsType(State) <> t.target.oclAsType(State));
+	labeledSuperOutgoings := self.super.outgoings.oclAsType(LabeledTransition)->asSet();
+	
+	labeledOutgoingsWithInnerTarget := innerTransitions->select(t | t.source.oclAsType(State) = t.target.oclAsType(State));
+	labeledOutgoingsWithComplexTarget := self.super.directSubStates().outgoings.oclAsType(LabeledTransition)->select(t | (t.source.oclAsType(State) = self or t.source.oclAsType(State) = lowerState) and t.target.oclIsTypeOf(ComplexState))->asSet();
+	
+	var sources : Set(State) := Set{self, lowerState};
+	log('sources:');
+	var strSrcs : String := sources->iterate(s : State; res : String = '' | res.concat(s.name).concat('\n'));
+	log(strSrcs);
+	// add new transitions here for case 1
+	var strLOs : String := labeledOutgoings->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+	log('labeledOutgoings');
+	log(strLOs);
+	log('-------------------------------------------------');
+	if (labeledOutgoings->notEmpty()) {
+		outgoings :=  labeledOutgoings->map mapTransitionBetweenDifferentSimpleStates(100, sources);
+	};
+
+	// add new transitions here for case 2	
+	var strLOITs : String := labeledOutgoingsWithInnerTarget->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+	log('labeledOutgoingsWithInnerTarget');
+	log(strLOITs);
+	log('-------------------------------------------------');
+	if (labeledOutgoingsWithInnerTarget->notEmpty()) {
+		outgoings += labeledOutgoingsWithInnerTarget->map mapTransitionBetweenSameSimpleStates(200, sources);
+	};
+	
+	// add new transitions here for case 3
+	var strLOCTs : String := labeledOutgoingsWithComplexTarget->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+	log('labeledOutgoingsWithComplexTarget');
+	log(strLOCTs);
+	log('-------------------------------------------------');
+	if (labeledOutgoingsWithComplexTarget->notEmpty()) {
+		outgoings += labeledOutgoingsWithComplexTarget->map mapTransitionFromSimpleToComplex(300, sources);
+	};
+	
+	// add new transitions here for case 4
+	var strLSOs : String := labeledSuperOutgoings->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+	log('labeledSuperOutgoings');
+	log(strLSOs);
+	log('-------------------------------------------------');
+	if (labeledSuperOutgoings->notEmpty()) {
+		outgoings += labeledSuperOutgoings->map mapTransitionBetweenSameComplexStates(400, sources);
+		outgoings += labeledSuperOutgoings->map mapTransitionFromComplexToSimple(400, sources);
+	};
+
+	log('Mahbub sources:');
+	strSrcs := sources->iterate(s : State; res : String = '' | res.concat(s.name).concat('\n'));
+	log(strSrcs);
+	var strOutgoings : String := outgoings->iterate(t : LabeledTransition; res : String = '' | res.concat(t.id.toString()).concat(', ').concat(t.source.oclAsType(State).name).concat(' ---> ').concat(t.target.oclAsType(State).name).concat('\n'));
+	log('Outgoings Size: '.concat(outgoings->size().toString()));
+	log(strOutgoings);
+}
+
+mapping inout statemachine :: LabeledTransition :: mergeTransitionsOfSameAction(target1 : State, target2 : State) 
+{
+	log('Mapping Name: mergeTransitionsOfSameAction');
+	id := self.id;
+	action := self.action;
+	source := self.source;
+	var statemachineStates : Set(State) := sm.objectsOfType(State);
+	if (statemachineStates->notEmpty()) {
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{target1.name, target2.name}))) {
+			log('new target state is already exists for transition id: '.concat(id.toString()));
+			target := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{target1.name, target2.name}));
+		} else {
+			log('creating target state for transition id: '.concat(id.toString()));
+			target := target1->map multiply(target2)->any(true);
+		};
+	};
+}
+
+mapping statemachine :: LabeledTransition :: mapTransitionBetweenDifferentSimpleStates(transitionId : Integer, sources : Set(State)) : LabeledTransition
+	when {
+		self.source.oclIsTypeOf(State) and 
+		self.target.oclIsTypeOf(State) and
+		self.source.oclAsType(State) <> self.target.oclAsType(State)
+	}
+{
+	log('Mapping Name: mapTransitionBetweenDifferentSimpleStates');
+	var anotherState : State := (sources - Set{self.source.oclAsType(State)})->any(true);
+	id := self.id + transitionId;
+	action := self.action;
+	var statemachineStates : Set(State) := sm.objectsOfType(State);
+	if (statemachineStates->notEmpty()) {
+		log('Statemachine States:');
+		var strMachineStates : String := statemachineStates.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+		log(strMachineStates);
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{self.source.oclAsType(State).name, anotherState.name}))) {
+			log('new source state is already exists for transition id: '.concat(id.toString()));
+			source := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{self.source.oclAsType(State).name, anotherState.name}));
+		} else {
+			log('creating new source state for transition id: '.concat(id.toString()));
+			source := self.source.oclAsType(State)->map multiply(anotherState)->any(true);
+		};
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{self.target.oclAsType(State).name, anotherState.name}))) {
+			log('new target state is already exists for transition id: '.concat(id.toString()));
+			target := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{self.target.oclAsType(State).name, anotherState.name}));
+		} else {
+			log('creating target state for transition id: '.concat(id.toString()));
+			target := self.target.oclAsType(State)->map multiply(anotherState)->any(true);
+		};
+	};
+}
+
+mapping statemachine :: LabeledTransition :: mapTransitionBetweenSameSimpleStates(transitionId : Integer, sources : Set(State)) : LabeledTransition 
+	when {
+		self.source.oclIsTypeOf(State) and 
+		self.target.oclIsTypeOf(State) and
+		self.source.oclAsType(State) = self.target.oclAsType(State)
+	}
+{
+	log('Mapping Name: mapTransitionBetweenSameSimpleStates');
+	var anotherState : State := (sources - Set{self.source.oclAsType(State)})->any(true);
+	id := self.id + transitionId;
+	action := self.action;
+	var statemachineStates : Set(State) := sm.objectsOfType(State);
+	if (statemachineStates->notEmpty()) {
+		log('Statemachine States:');
+		var strMachineStates : String := statemachineStates.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+		log(strMachineStates);
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{self.source.oclAsType(State).name, anotherState.name}))) {
+			log('new source state is already exists for transition id: '.concat(id.toString()));
+			source := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{self.source.oclAsType(State).name, anotherState.name}));
+		} else {
+			log('creating new source state for transition id: '.concat(id.toString()));
+			source := self.source.oclAsType(State)->map multiply(anotherState)->any(true);
+		};
+	};
+	target := source;
+}
+
+mapping statemachine :: LabeledTransition :: mapTransitionFromSimpleToComplex(transitionId : Integer, sources : Set(State)) : LabeledTransition 
+	when {
+		self.source.oclIsTypeOf(State) and 
+		self.target.oclIsTypeOf(ComplexState)
+	}
+{
+	log('Mapping Name: mapTransitionFromSimpleToComplex');
+	var anotherState : State := (sources - Set{self.source.oclAsType(State)})->any(true);
+	var initialStates : OrderedSet(State) := self.target.oclAsType(ComplexState).realInitialStates()->asOrderedSet();
+	id := self.id + transitionId;
+	action := self.action;
+	var statemachineStates : Set(State) := sm.objectsOfType(State);
+	if (statemachineStates->notEmpty()) {
+		log('Statemachine States:');
+		var strMachineStates : String := statemachineStates.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+		log(strMachineStates);
+		if (anotherState->notEmpty()) {
+			if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{self.source.oclAsType(State).name, anotherState.name}))) {
+				log('new source state is already exists for transition id: '.concat(id.toString()));
+				source := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{self.source.oclAsType(State).name, anotherState.name}));
+			} else {
+				log('creating new source state for transition id: '.concat(id.toString()));
+				source := self.source.oclAsType(State)->map multiply(anotherState)->any(true);
+			};
+		} else {
+			source := self.source;
+		};
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{initialStates->at(1).name, initialStates->at(2).name}))) {
+			log('new target state is already exists for transition id: '.concat(id.toString()));
+			target := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{initialStates->at(1).name, initialStates->at(2).name}));
+		} else {
+			log('creating target state for transition id: '.concat(id.toString()));
+			target := initialStates->at(1)->map multiply(initialStates->at(2))->any(true);
+		};
+	};
+}
+
+mapping statemachine :: LabeledTransition :: mapTransitionBetweenSameComplexStates(transitionId : Integer, sources : Set(State)) : LabeledTransition 
+	when {
+		self.source.oclIsTypeOf(ComplexState) and 
+		self.target.oclIsTypeOf(ComplexState) and
+		self.source.oclAsType(ComplexState) = self.target.oclAsType(ComplexState)
+	}
+{
+	log('Mapping Name: mapTransitionBetweenSameComplexStates');
+	var orderedSources : OrderedSet(State) := sources->asOrderedSet();
+	var initialStates : OrderedSet(State) := self.source.oclAsType(ComplexState).realInitialStates()->asOrderedSet();
+	id := self.id + transitionId;
+	action := self.action;
+	var statemachineStates : Set(State) := sm.objectsOfType(State);
+	if (statemachineStates->notEmpty()) {
+		log('Statemachine States:');
+		var strMachineStates : String := statemachineStates.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+		log(strMachineStates);
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{orderedSources->at(1).name, orderedSources->at(2).name}))) {
+			log('new source state is already exists for transition id: '.concat(id.toString()));
+			source := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{orderedSources->at(1).name, orderedSources->at(2).name}));
+		} else {
+			log('creating new source state for transition id: '.concat(id.toString()));
+			source := orderedSources->at(1)->map multiply(orderedSources->at(2))->any(true);
+		};
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{initialStates->at(1).name, initialStates->at(2).name}))) {
+			log('new target state is already exists for transition id: '.concat(id.toString()));
+			target := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{initialStates->at(1).name, initialStates->at(2).name}));
+		} else {
+			log('creating target state for transition id: '.concat(id.toString()));
+			target := initialStates->at(1)->map multiply(initialStates->at(2))->any(true);
+		};
+	};
+}
+
+mapping statemachine :: LabeledTransition :: mapTransitionFromComplexToSimple(transitionId : Integer, sources : Set(State)) : LabeledTransition 
+	when {
+		self.source.oclIsTypeOf(ComplexState) and 
+		self.target.oclIsTypeOf(State)
+	}
+{
+	log('Mapping Name: mapTransitionFromComplexToSimple');
+	var orderedSources : OrderedSet(State) := sources->asOrderedSet();
+	id := self.id + transitionId;
+	action := self.action;
+	target := self.target;
+	var statemachineStates : Set(State) := sm.objectsOfType(State);
+	if (statemachineStates->notEmpty()) {
+		log('Statemachine States:');
+		var strMachineStates : String := statemachineStates.name->iterate(nam : String; res : String = '' | res.concat(nam).concat('\n'));
+		log(strMachineStates);
+		if (statemachineStates.name->exists(nam | nam.tokenize(',').trim()->includesAll(Set{orderedSources->at(1).name, orderedSources->at(2).name}))) {
+			log('new source state is already exists for transition id: '.concat(id.toString()));
+			source := statemachineStates->any(s | s.name.tokenize(',').trim()->includesAll(Set{orderedSources->at(1).name, orderedSources->at(2).name}));
+		} else {
+			log('creating new source state for transition id: '.concat(id.toString()));
+			source := orderedSources->at(1)->map multiply(orderedSources->at(2))->any(true);
+		};
+	};
+}

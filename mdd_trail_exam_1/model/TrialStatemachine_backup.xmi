@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smt:Statemachine
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:smt="http://hsfulda.master.mdd.trial"
+    xsi:schemaLocation="http://hsfulda.master.mdd.trial startOfTrial.ecore"
+    history="false"
+    initial="//@states.0"
+    name="myMachine">
+  <states name="A">
+    <outgoings
+        id="1"
+        target="//@states.1"
+        action="//@actions.0"/>
+    <outgoings
+        id="2"
+        target="//@states.1/@region/@states.0"
+        action="//@actions.1"/>
+  </states>
+  <states xsi:type="smt:ComplexState"
+      name="B">
+    <outgoings
+        id="3"
+        target="//@states.0"
+        action="//@actions.0"/>
+    <region
+        history="true"
+        defaultHistory="//@states.1/@region/@states.1"
+        initial="//@states.1/@region/@states.1">
+      <states
+          name="B1">
+        <outgoings
+            id="4"
+            target="//@states.1/@region/@states.1"
+            action="//@actions.1"/>
+      </states>
+      <states
+          name="B2">
+        <outgoings
+            id="5"
+            target="//@states.1/@region/@states.2"
+            action="//@actions.1"/>
+      </states>
+      <states
+          name="B3">
+        <outgoings
+            id="6"
+            target="//@states.1/@region/@states.0"
+            action="//@actions.1"/>
+      </states>
+    </region>
+  </states>
+  <actions name="a1"/>
+  <actions name="a2"/>
+</smt:Statemachine>

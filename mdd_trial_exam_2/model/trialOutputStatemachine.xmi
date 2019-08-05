@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smt:Statemachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:smt="http://hsfulda.master.mdd.trial" xsi:schemaLocation="http://hsfulda.master.mdd.trial startOfTrial.ecore" history="false" initial="//@states.0" name="outputSM">
+  <states name="s1">
+    <outgoings id="1" target="//@states.1" action="//@actions.0"/>
+  </states>
+  <states name="s2">
+    <outgoings id="2" target="//@states.0" action="//@actions.0"/>
+  </states>
+  <actions name="a"/>
+</smt:Statemachine>

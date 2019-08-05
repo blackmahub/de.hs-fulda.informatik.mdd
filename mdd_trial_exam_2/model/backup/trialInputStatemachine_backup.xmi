@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:Statemachine
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sm="http://hsfulda.master.mdd.emf.statemachine"
+    xsi:schemaLocation="http://hsfulda.master.mdd.emf.statemachine statemachine.ecore"
+    name="inputSM">
+  <states outgoings="//@transitions.0"
+      name="s1"/>
+  <states outgoings="//@transitions.1"
+      name="s2"/>
+  <initial outgoings="//@transitions.2"
+      id="1"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="1"
+      source="//@states.0"
+      target="//@states.1"
+      action="//@actions.0"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="2"
+      source="//@states.1"
+      target="//@states.0"
+      action="//@actions.0"/>
+  <transitions
+      id="3"
+      source="//@initial"
+      target="//@states.0"/>
+  <actions name="a"/>
+</sm:Statemachine>

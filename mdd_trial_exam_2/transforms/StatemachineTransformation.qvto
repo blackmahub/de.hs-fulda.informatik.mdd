@@ -1,0 +1,40 @@
+modeltype SourceSM 'strict' uses statemachine('http://hsfulda.master.mdd.emf.statemachine');
+modeltype TargetSM 'strict' uses trialStatemachine('http://hsfulda.master.mdd.trial');
+
+transformation StatemachineTransformation(in sourceSM : SourceSM, out targetSM : TargetSM);
+
+main() {
+	
+	sourceSM.objectsOfType(SourceSM :: Statemachine)->map toNewSM();//->any(true);
+}
+
+mapping SourceSM :: Statemachine :: toNewSM() : TargetSM :: Statemachine {
+	
+	log('Mapping Statemachine: '.concat(self.name));
+	name := 'outputSM';
+	history := false;
+	states := self.states->map toNewState();
+	actions := states.outgoings.action->asSet();
+	initial := states->any(s | s.name = self.realInitialState().name); 
+}
+
+mapping SourceSM :: State :: toNewState() : TargetSM :: State {
+	
+	log('Mapping State: '.concat(self.name));
+	name := self.name;
+	outgoings := self.outgoings.oclAsType(LabeledTransition)->map toNewLabeledTransition()->asSet();
+}
+
+mapping SourceSM :: LabeledTransition :: toNewLabeledTransition() : TargetSM :: LabeledTransition {
+	
+	log('Mapping LabeledTransition: '.concat(self.id.toString()));
+	id := self.id;
+	target := self.target.oclAsType(State)->map toNewState()->any(true);
+	action := self.action->map toNewAction()->any(true);
+}
+
+mapping SourceSM :: Action :: toNewAction() : TargetSM :: Action {
+	
+	log('Mapping Action: '.concat(self.name));
+	name := self.name;
+}

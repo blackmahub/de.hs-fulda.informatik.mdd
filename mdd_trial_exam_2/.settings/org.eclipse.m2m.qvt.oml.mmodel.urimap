@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uriMap:MappingContainer xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:uriMap="http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0">
+  <mapping sourceURI="http://hsfulda.master.mdd.emf.statemachine" targetURI="platform:/resource/mdd_trial_exam_2/model/statemachine.ecore"/>
+  <mapping sourceURI="http://hsfulda.master.mdd.trial" targetURI="platform:/resource/mdd_trial_exam_2/model/startOfTrial.ecore"/>
+</uriMap:MappingContainer>

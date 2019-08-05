@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sourceModel="http://www.hs-fulda.de/mdd/sourceModel" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="toContainer" package="exercise5" module="exercise5"/>
+    <context>
+      <context kind="INOUT" name="self" type="Container">
+        <value>
+          <modelElement href="SourceContainer2.xmi#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result/>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toMasterStudent" package="exercise5" module="exercise5"/>
+    <context>
+      <context name="self" type="BachelorStudent">
+        <value modelElement="//@traceRecords.1/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sourceModel:BachelorStudent" age="20">
+            <likes xsi:type="sourceModel:MasterStudent" href="SourceContainer2.xmi#//@persons.2"/>
+            <teacher href="SourceContainer2.xmi#//@persons.1"/>
+            <teacher href="SourceContainer2.xmi#//@persons.8"/>
+            <teacher href="SourceContainer2.xmi#//@persons.0"/>
+            <teacher href="SourceContainer2.xmi#//@persons.11"/>
+            <teacher href="SourceContainer2.xmi#//@persons.10"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="MasterStudent">
+        <value>
+          <modelElement href="SourceContainer2.xmi#//@persons.7"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toMasterStudent" package="exercise5" module="exercise5"/>
+    <context>
+      <context name="self" type="BachelorStudent">
+        <value modelElement="//@traceRecords.2/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sourceModel:BachelorStudent" age="21">
+            <likes xsi:type="sourceModel:Professor" href="SourceContainer2.xmi#//@persons.8"/>
+            <teacher href="SourceContainer2.xmi#//@persons.8"/>
+            <teacher href="SourceContainer2.xmi#//@persons.1"/>
+            <teacher href="SourceContainer2.xmi#//@persons.0"/>
+            <teacher href="SourceContainer2.xmi#//@persons.11"/>
+            <teacher href="SourceContainer2.xmi#//@persons.10"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="MasterStudent">
+        <value>
+          <modelElement href="SourceContainer2.xmi#//@persons.12"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="toMasterStudent" package="exercise5" module="exercise5"/>
+    <context>
+      <context name="self" type="BachelorStudent">
+        <value modelElement="//@traceRecords.3/@context/@context/@value/@intermediateElement">
+          <intermediateElement xsi:type="sourceModel:BachelorStudent" age="20">
+            <likes xsi:type="sourceModel:Professor" href="SourceContainer2.xmi#//@persons.11"/>
+            <teacher href="SourceContainer2.xmi#//@persons.0"/>
+            <teacher href="SourceContainer2.xmi#//@persons.11"/>
+            <teacher href="SourceContainer2.xmi#//@persons.10"/>
+          </intermediateElement>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="MasterStudent">
+        <value>
+          <modelElement href="SourceContainer2.xmi#//@persons.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

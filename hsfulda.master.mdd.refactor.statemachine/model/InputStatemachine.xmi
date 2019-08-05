@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:Statemachine xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sm="http://hsfulda.master.mdd.emf.statemachine" xsi:schemaLocation="http://hsfulda.master.mdd.emf.statemachine Statemachine.ecore" name="InputStatemachine">
+  <states outgoings="//@transitions.2 //@transitions.3 //@transitions.9" name="C"/>
+  <states outgoings="//@transitions.4 //@transitions.1 //@transitions.12" name="A"/>
+  <states outgoings="//@transitions.8 //@transitions.10 //@transitions.11" name="B1,B3"/>
+  <states outgoings="//@transitions.0 //@transitions.6 //@transitions.5" name="B2,B4"/>
+  <initial outgoings="//@transitions.7" id="1"/>
+  <transitions xsi:type="sm:LabeledTransition" id="313" source="//@states.3" target="//@states.2" action="//@actions.2"/>
+  <transitions xsi:type="sm:LabeledTransition" id="5" source="//@states.1" target="//@states.1" action="//@actions.2"/>
+  <transitions xsi:type="sm:LabeledTransition" id="7" source="//@states.0" target="//@states.1" action="//@actions.0"/>
+  <transitions xsi:type="sm:LabeledTransition" id="8" source="//@states.0" target="//@states.0" action="//@actions.1"/>
+  <transitions xsi:type="sm:LabeledTransition" id="4" source="//@states.1" target="//@states.1" action="//@actions.1"/>
+  <transitions xsi:type="sm:LabeledTransition" id="410" source="//@states.3" target="//@states.0" action="//@actions.0"/>
+  <transitions xsi:type="sm:LabeledTransition" id="411" source="//@states.3" target="//@states.2" action="//@actions.1"/>
+  <transitions id="1" source="//@initial" target="//@states.1"/>
+  <transitions xsi:type="sm:LabeledTransition" id="114" source="//@states.2" target="//@states.3" action="//@actions.2"/>
+  <transitions xsi:type="sm:LabeledTransition" id="9" source="//@states.0" target="//@states.0" action="//@actions.2"/>
+  <transitions xsi:type="sm:LabeledTransition" id="411" source="//@states.2" target="//@states.2" action="//@actions.1"/>
+  <transitions xsi:type="sm:LabeledTransition" id="410" source="//@states.2" target="//@states.0" action="//@actions.0"/>
+  <transitions xsi:type="sm:LabeledTransition" id="306" source="//@states.1" target="//@states.2" action="//@actions.0"/>
+  <actions name="a1"/>
+  <actions name="a2"/>
+  <actions name="a3"/>
+</sm:Statemachine>

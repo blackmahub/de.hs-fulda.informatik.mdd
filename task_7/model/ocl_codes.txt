@@ -1,0 +1,10 @@
+invariant validateState : self.super->notEmpty() implies self.super.region.states->includes(self);
+
+invariant validateComplexState: self.directSubStates()->forAll(s | s.super = self);
+
+self.states->select(s | s.oclIsKindOf(ComplexState))->asOrderedSet()->at(1).oclAsType(ComplexState).directSubStates()->iterate(s : State; names : String = '\n' | names.concat(s.fullyQualifiedName()).concat('\n'))
+
+
+
+
+

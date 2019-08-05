@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sm:Statemachine
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sm="http://hsfulda.master.mdd.emf.statemachine"
+    xsi:schemaLocation="http://hsfulda.master.mdd.emf.statemachine Statemachine.ecore"
+    name="InputStatemachine">
+  <states outgoings="//@transitions.1 //@transitions.4 //@transitions.7"
+      name="C"/>
+  <states outgoings="//@transitions.12 //@transitions.10 //@transitions.6"
+      name="A"/>
+  <states xsi:type="sm:ComplexState"
+      outgoings="//@transitions.11 //@transitions.5"
+      name="B">
+    <region>
+      <states
+          outgoings="//@transitions.8"
+          name="B1"
+          super="//@states.2"/>
+      <states
+          outgoings="//@transitions.0"
+          name="B2"
+          super="//@states.2"/>
+      <initial
+          outgoings="//@transitions.13"
+          id="2"/>
+    </region>
+    <region>
+      <states
+          outgoings="//@transitions.3"
+          name="B3"
+          super="//@states.2"/>
+      <states
+          outgoings="//@transitions.2"
+          name="B4"
+          super="//@states.2"/>
+      <initial
+          outgoings="//@transitions.14"
+          id="3"/>
+    </region>
+  </states>
+  <initial outgoings="//@transitions.9"
+      id="1"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="13"
+      source="//@states.2/@region.0/@states.1"
+      target="//@states.2"
+      action="//@actions.2"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="7"
+      source="//@states.0"
+      target="//@states.1"
+      action="//@actions.0"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="15"
+      source="//@states.2/@region.1/@states.1"
+      target="//@states.2/@region.1/@states.1"
+      action="//@actions.2"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="14"
+      source="//@states.2/@region.1/@states.0"
+      target="//@states.2/@region.1/@states.1"
+      action="//@actions.2"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="8"
+      source="//@states.0"
+      target="//@states.0"
+      action="//@actions.1"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="11"
+      source="//@states.2"
+      target="//@states.2"
+      action="//@actions.1"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="6"
+      source="//@states.1"
+      target="//@states.2"
+      action="//@actions.0"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="9"
+      source="//@states.0"
+      target="//@states.0"
+      action="//@actions.2"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="12"
+      source="//@states.2/@region.0/@states.0"
+      target="//@states.2/@region.0/@states.1"
+      action="//@actions.2"/>
+  <transitions
+      id="1"
+      source="//@initial"
+      target="//@states.1"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="5"
+      source="//@states.1"
+      target="//@states.1"
+      action="//@actions.2"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="10"
+      source="//@states.2"
+      target="//@states.0"
+      action="//@actions.0"/>
+  <transitions
+      xsi:type="sm:LabeledTransition"
+      id="4"
+      source="//@states.1"
+      target="//@states.1"
+      action="//@actions.1"/>
+  <transitions
+      id="2"
+      source="//@states.2/@region.0/@initial"
+      target="//@states.2/@region.0/@states.0"/>
+  <transitions
+      id="3"
+      source="//@states.2/@region.1/@initial"
+      target="//@states.2/@region.1/@states.0"/>
+  <actions name="a1"/>
+  <actions name="a2"/>
+  <actions name="a3"/>
+</sm:Statemachine>

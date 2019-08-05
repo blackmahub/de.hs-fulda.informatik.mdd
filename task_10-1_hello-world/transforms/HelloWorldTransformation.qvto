@@ -1,0 +1,28 @@
+
+modeltype Source "strict" uses SourceModel('http://www.hs-fulda.de/mdd/sourceModel');
+modeltype Target "strict" uses TargetModel('http://www.hs-fulda.de/mdd/targetModel');
+		
+transformation HelloWorldTransformation(in source:Source, out target:Target);
+
+main() {
+	source.objectsOfType(Container)->map toContainer();
+}
+
+mapping Source::Container::toContainer() : Target::Container {
+	persons := self.persons->selectByType(Professor).map toProfessor();
+}
+
+mapping Source::Student::toStudent() : Target::Studentin 
+	when {
+		self.oclIsKindOf(BachelorStudent)
+	}
+{
+	age := self.age;
+	aspiredDegree := StudentKind::Bachelor
+}
+
+mapping Source::Professor::toProfessor() : Target::Person 
+{
+	age := self.age;
+//	learner := self.learner;
+}
